@@ -1,4 +1,5 @@
 "use client"
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState, useEffect } from 'react'
 import { Upload, Download, X } from 'lucide-react'
@@ -12,6 +13,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+
+
+interface CardI{
+  tilte: string,
+  cant: number,
+  image: string,
+  eventos:[{
+    evento:number,
+    start: string,
+    end: string,
+    duration:string
+  }],
+  imgDec: string
+
+}
+
+interface Data{
+  card: CardI,
+  isMobile?:boolean 
+}
 
 export function SeismicAnalysisUi() {
   const [selectedCard, setSelectedCard] = useState(null)
@@ -42,17 +63,18 @@ export function SeismicAnalysisUi() {
     return () => clearInterval(starInterval)
   }, [])
 
-  const handleCardClick = (card) => {
+  const handleCardClick = (card:any) => {
     setSelectedCard(card)
     if (window.innerWidth < 768) {
       setIsMobileModalOpen(true)
     }
   }
+  
 
-  const DetailCard = ({ card, isMobile = false }) => (
+  const DetailCard = ({ card, isMobile = false }:Data) => (
     <Card className={`bg-opacity-30 backdrop-blur-lg bg-blue-800 ${isMobile ? 'w-full' : ''}`}>
       <CardHeader>
-        <CardTitle className="text-blue-300">{card.title} - Detección</CardTitle>
+        <CardTitle className="text-blue-300">{card.tilte} - Detección</CardTitle>
         <h2 className="text-blue-300">  -  Sismo Intensidad Media</h2>
       </CardHeader>
       <CardContent>
